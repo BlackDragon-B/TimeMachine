@@ -34,6 +34,23 @@ local function generateUuid()
     return table.concat(uuid)
 end
 
+-- Download Function
+local function download(u,s)
+    handle = http.get(u)
+    if not handle then
+        print("Failed to download.")
+    else
+        local data = handle.readAll()
+        local f = fs.open(s, "w")
+        handle.close()
+        print("Writing Data.")
+        f.write(data)
+        f.close()
+        end
+        return
+    end
+end
+
 -- Main code
 local function createBackup(path,key,name,progdorPath)
   shell.run(progdorPath.." -s "..path.." /tmp")
@@ -46,13 +63,17 @@ end
 local function restoreBackup()
 end
 
+local installpath = "/" -- Hardcode, will be changed with configuration
 local function checkDep()
 if not fs.exists("chacha.lua")
   print("NOTICE: ChaCha20 not found, Downloading.")
+  download("https://pastebin.com/raw/GPzf9JSa",installpath.."chacha.lua")
 elseif not fs.exists("sha256.lua")
   print("NOTICE: sha256 not found, Downloading.")
+  download("https://pastebin.com/raw/6UV4qfNF",installpath.."sha256.lua")
 elseif not fs.exists("progdor2.lua")
   print("NOTICE: progdor2 not found, Downloading.")
+  download("https://raw.githubusercontent.com/LDDestroier/CC/master/progdor2.lua",installpath.."progdor2.lua")
 end
 -- WSS stuff
 local function sendWS(data, ip)
