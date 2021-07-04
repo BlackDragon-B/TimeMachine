@@ -46,7 +46,6 @@ local function download(u,s)
         print("Writing Data.")
         f.write(data)
         f.close()
-        end
         return
     end
 end
@@ -88,4 +87,4 @@ local function sendWS(data, ip)
 end
 
 
-return { createBackup = createBackup, restoreBackup = restoreBackup, sendWS = sendWS, generateUuid = generateUuid}
+return { createBackup = createBackup, restoreBackup = restoreBackup, sendWS = sendWS, generateUuid = generateUuid, checkDep = checkDep }
